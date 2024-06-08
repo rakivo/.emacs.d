@@ -154,7 +154,21 @@
    ((eq system-type 'gnu/linux) "Iosevka-20")))
 
 (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
-    
+
+(rc/require-theme 'zenburn)
+(custom-set-faces
+ '(font-lock-constant-face ((t (:foreground "#96A6C8"))))
+ '(font-lock-function-name-face ((t (:foreground "#94BFF3"))))
+ '(font-lock-keyword-face ((t (:foreground "#F0DFAF" :weight bold))))
+ '(font-lock-reference-face ((t (:foreground (\, "#DCDCCC")))))
+ '(font-lock-type-face ((t (:foreground "#F0DFAF"))))
+ '(font-lock-variable-name-face ((t (:foreground "#DCDCCC")))))
+(defun rust-unsafe ()
+  (font-lock-add-keywords nil
+    '(("\\<\\(unsafe\\)\\>"
+       1 '(:foreground "ff4f58") t))))
+(add-hook 'rust-mode-hook 'rust-unsafe)
+
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -167,25 +181,11 @@
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-(set-frame-font "Ubuntu Mono-20" nil t)
+;; (set-frame-font "Ubuntu Mono-20" nil t)
 
 ;; (rc/require-theme 'gruber-darker)
 ;; (custom-set-faces
 ;;   '(font-lock-type-face ((t (:foreground "#FFDD33" :weight bold)))))
-
-(rc/require-theme 'zenburn)
-(custom-set-faces
- '(font-lock-constant-face ((t (:foreground "#96A6C8"))))
- '(font-lock-function-name-face ((t (:foreground "#94BFF3"))))
- '(font-lock-keyword-face ((t (:foreground "#F0DFAF" :weight bold))))
- '(font-lock-reference-face ((t (:foreground (\, "#DCDCCC")))))
- '(font-lock-type-face ((t (:foreground "#F0DFAF" :weight bold))))
- '(font-lock-variable-name-face ((t (:foreground "#DCDCCC")))))
-(defun rust-unsafe ()
-  (font-lock-add-keywords nil
-    '(("\\<\\(unsafe\\)\\>"
-       1 '(:foreground "ff4f58") t))))
-(add-hook 'rust-mode-hook 'rust-unsafe)
 
 (setq whitespace-display-mappings
       '((space-mark 32 [183] [46])
@@ -224,8 +224,6 @@
 (require 'fasm-mode)
 (add-to-list 'auto-mode-alist '("\\.asm\\'" . fasm-mode))
 (require 'porth-mode)
-
-(require 'zig-mode)
 
 (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 (add-to-list 'auto-mode-alist '("\\.zon\\'" . zig-mode))
@@ -409,9 +407,6 @@
   (ivy-mode +1))
 
 (require 'compile)
-
-(load "~/.emacs.rc/mojo.el")
-(add-to-list 'auto-mode-alist '("\\.mojo\\'" . mojo-mode))
 
 (add-to-list 'compilation-error-regexp-alist
              '("\\([a-zA-Z0-9\\.]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?"
