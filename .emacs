@@ -195,7 +195,7 @@
         (tab-mark 9 [9655 9] [92 9])))
 
 (custom-set-faces
- '(whitespace-space ((t (:foreground "gray40" :background nil)))))
+ '(whitespace-space ((t (:foreground "gray30" :background nil)))))
 
 (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark newline-mark))
 
