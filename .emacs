@@ -8,22 +8,6 @@
 (setq x-super-keysym 'meta)
 (setq x-alt-keysym 'capslock)
 
-;; (require 'corfu)
-;; (setq corfu-auto t
-;;       corfu-quit-no-match 'separator)
-;; (use-package corfu
-;;   :custom
-;;   (corfu-cycle t)
-;;   (corfu-preselect 'prompt)
-;;   :bind
-;;   (:map corfu-map
-;;         ("C-n" . corfu-next)
-;;         ("C-p" . corfu-previous)
-;;         ([tab] . corfu-complete)
-;;         ([ret] . corfu-complete))
-;;   :init
-;;   (global-corfu-mode))
-
 (use-package company
   :ensure t
   :config
@@ -153,22 +137,22 @@
    ((eq system-type 'windows-nt) "Consolas-13")
    ((eq system-type 'gnu/linux) "Iosevka-20")))
 
-(add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
-(rc/require-theme 'gruber-darker)
+;; (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
+;; (rc/require-theme 'gruber-darker)
 
-;; (rc/require-theme 'zenburn)
-;; (custom-set-faces
-;;  '(font-lock-constant-face ((t (:foreground "#96A6C8"))))
-;;  '(font-lock-function-name-face ((t (:foreground "#94BFF3"))))
-;;  '(font-lock-keyword-face ((t (:foreground "#F0DFAF" :weight bold))))
-;;  '(font-lock-reference-face ((t (:foreground (\, "#DCDCCC")))))
-;;  '(font-lock-type-face ((t (:foreground "#F0DFAF"))))
-;;  '(font-lock-variable-name-face ((t (:foreground "#DCDCCC")))))
-;; (defun rust-unsafe ()
-;;   (font-lock-add-keywords nil
-;;     '(("\\<\\(unsafe\\)\\>"
-;;        1 '(:foreground "ff4f58") t))))
-;; (add-hook 'rust-mode-hook 'rust-unsafe)
+(rc/require-theme 'zenburn)
+(custom-set-faces
+ '(font-lock-constant-face ((t (:foreground "#96A6C8"))))
+ '(font-lock-function-name-face ((t (:foreground "#94BFF3"))))
+ '(font-lock-keyword-face ((t (:foreground "#F0DFAF" :weight bold))))
+ '(font-lock-reference-face ((t (:foreground (\, "#DCDCCC")))))
+ '(font-lock-type-face ((t (:foreground "#F0DFAF" :weight bold))))
+ '(font-lock-variable-name-face ((t (:foreground "#DCDCCC")))))
+(defun rust-unsafe ()
+  (font-lock-add-keywords nil
+    '(("\\<\\(unsafe\\)\\>"
+       1 '(:foreground "ff4f58") t))))
+(add-hook 'rust-mode-hook 'rust-unsafe)
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -192,7 +176,7 @@
 (setq whitespace-display-mappings
       '((space-mark 32 [183] [46])
         (newline-mark 0)
-        (tab-mark 9 [9655 9] [92 9])))
+        (tab-mark 0)))
 
 (custom-set-faces
  '(whitespace-space ((t (:foreground "gray30" :background nil)))))
@@ -414,10 +398,10 @@
              '("\\([a-zA-Z0-9\\.]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?"
                1 2 (4) (5)))
 
-(add-to-list 'compilation-error-regexp-alist-alist
-             '(rakefile-indent-error
-               "^\\(.*\\):\\([0-9]+\\)"
-               1 2))
+;; (add-to-list 'compilation-error-regexp-alist-alist
+;;              '(rakefile-indent-error
+;;                "^\\(.*\\):\\([0-9]+\\)"
+;;                1 2))
 
 (add-to-list 'compilation-error-regexp-alist 'rakefile-indent-error)
 
