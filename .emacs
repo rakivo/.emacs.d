@@ -137,22 +137,22 @@
    ((eq system-type 'windows-nt) "Consolas-13")
    ((eq system-type 'gnu/linux) "Iosevka-20")))
 
-;; (add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
+(add-to-list 'default-frame-alist `(font . ,(rc/get-default-font)))
 ;; (rc/require-theme 'gruber-darker)
 
-(rc/require-theme 'zenburn)
-(custom-set-faces
- '(font-lock-constant-face ((t (:foreground "#96A6C8"))))
- '(font-lock-function-name-face ((t (:foreground "#94BFF3"))))
- '(font-lock-keyword-face ((t (:foreground "#F0DFAF" :weight bold))))
- '(font-lock-reference-face ((t (:foreground (\, "#DCDCCC")))))
- '(font-lock-type-face ((t (:foreground "#F0DFAF" :weight bold))))
- '(font-lock-variable-name-face ((t (:foreground "#DCDCCC")))))
-(defun rust-unsafe ()
-  (font-lock-add-keywords nil
-    '(("\\<\\(unsafe\\)\\>"
-       1 '(:foreground "ff4f58") t))))
-(add-hook 'rust-mode-hook 'rust-unsafe)
+;; (rc/require-theme 'zenburn)
+;; (custom-set-faces
+;;  '(font-lock-constant-face ((t (:foreground "#96A6C8"))))
+;;  '(font-lock-function-name-face ((t (:foreground "#94BFF3"))))
+;;  '(font-lock-keyword-face ((t (:foreground "#F0DFAF" :weight bold))))
+;;  '(font-lock-reference-face ((t (:foreground (\, "#DCDCCC")))))
+;;  '(font-lock-type-face ((t (:foreground "#F0DFAF" :weight bold))))
+;;  '(font-lock-variable-name-face ((t (:foreground "#DCDCCC")))))
+;; (defun rust-unsafe ()
+;;   (font-lock-add-keywords nil
+;;     '(("\\<\\(unsafe\\)\\>"
+;;        1 '(:foreground "ff4f58") t))))
+;; (add-hook 'rust-mode-hook 'rust-unsafe)
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -169,9 +169,13 @@
 ;; (set-face-attribute 'default t :font "Ubuntu Sans Mono-20")
 ;; (set-frame-font "Ubuntu Sans Mono-20" nil t)
 
-;; (rc/require-theme 'gruber-darker)
-;; (custom-set-faces
-;;   '(font-lock-type-face ((t (:foreground "#FFDD33" :weight bold)))))
+(rc/require-theme 'gruber-darker)
+(custom-set-faces
+  '(font-lock-variable-face ((t (:foreground "#FFFFFF" :weight bold))))
+  '(font-lock-variable-name-face ((t (:foreground "#FFFFFF"))))
+  '(font-lock-constant-face ((t (:foreground "#95a99f"))))
+  '(font-lock-keyword-face ((t (:foreground "#FFDD33" :weight bold))))
+  '(font-lock-type-face ((t (:foreground "#95a99f")))))
 
 (setq whitespace-display-mappings
       '((space-mark 32 [183] [46])
@@ -194,9 +198,9 @@
 (global-set-key (kbd "M-x") 'smex)
 (add-hook 'c-mode-hook (lambda ()
                        (interactive)
+                       (c-set-style "linux")
                        (setq c-basic-offset 4)
                        (setq tab-width 4)
-                       (c-set-style "linux")
                        (c-toggle-comment-style -1)))
 
 (rc/require 'haskell-mode)
@@ -209,14 +213,9 @@
 
 (require 'fasm-mode)
 (add-to-list 'auto-mode-alist '("\\.asm\\'" . fasm-mode))
-(require 'porth-mode)
-
 (add-to-list 'auto-mode-alist '("\\.zig\\'" . zig-mode))
 (add-to-list 'auto-mode-alist '("\\.zon\\'" . zig-mode))
 
-(require 'jai-mode)
-
-;; (rc/require 'cl-lib)
 (rc/require 'magit)
 
 (setq magit-auto-revert-mode nil)
@@ -239,7 +238,6 @@
 (setq dired-listing-switches "-alh")
 
 (rc/require 'yasnippet)
-
 (require 'yasnippet)
 (setq yas/triggers-in-field nil)
 (setq yas-snippet-dirs '("~/.emacs.snippets/"))
@@ -256,10 +254,10 @@
 ;; (global-corfu-mode 1)
 (global-company-mode 1)
 (global-eldoc-mode -1)
- 
-(require 'lsp-mode)                                                 
-(require 'lsp-ui)                                                   
-;     UNCOMMENT IF WANT TO TURN OFF AUTOCOMPLETION HINTS 
+
+(require 'lsp-mode)
+(require 'lsp-ui)
+;     UNCOMMENT IF WANT TO TURN OFF AUTOCOMPLETION HINTS
 ; (setq lsp-completion-enable nil)
 (setq lsp-completion-enable 1)
 
@@ -285,11 +283,11 @@
 (setq lsp-ui-sideline-enable nil)
 
 (setq lsp-ui-sideline-show-hover nil)
-(setq lsp-ui-sideline-show-code-actions nil) 
-(setq lsp-ui-imenu-enable nil) 
-(setq lsp-ui-flycheck-enable nil) 
-(setq lsp-ui-peek-enable nil) 
-(setq lsp-ui-scratch-enable nil) 
+(setq lsp-ui-sideline-show-code-actions nil)
+(setq lsp-ui-imenu-enable nil)
+(setq lsp-ui-flycheck-enable nil)
+(setq lsp-ui-peek-enable nil)
+(setq lsp-ui-scratch-enable nil)
 (setq lsp-signature-auto-activate nil)
 
 (add-hook 'c-mode-hook 'lsp)
@@ -299,7 +297,7 @@
 (add-hook 'c++-mode-hook 'lsp)
 (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
-                                                                    
+
 (electric-pair-mode 1)
 
 (setq electric-pair-pairs '(
@@ -333,41 +331,15 @@
                                 "--offset-encoding=utf-8"
                                 "--pch-storage=memory")))
 
-(add-hook 'c-mode-common-hook (lambda () (c-set-style "stroustrup")))
-(add-hook 'c-mode-common-hook 'flycheck-mode)
-(add-hook 'c-mode-common-hook (lambda () (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode 'rust-mode) (lsp-mode 1))))
-
 (rc/require
- 'scala-mode
- 'd-mode
  'yaml-mode
- 'glsl-mode
- 'tuareg
  'lua-mode
  'less-css-mode
- 'graphviz-dot-mode
- 'clojure-mode
- 'cmake-mode
  'rust-mode
- 'csharp-mode
- 'nim-mode
- 'jinja2-mode
  'markdown-mode
- 'purescript-mode
- 'nix-mode
- 'dockerfile-mode
  'toml-mode
- 'nginx-mode
- 'kotlin-mode
  'go-mode
- 'php-mode
- 'racket-mode
- 'qml-mode
- 'ag
  'hindent
- 'typescript-mode
- 'rfc-mode
- 'sml-mode
 )
 
 (setq-default tab-width 4)
@@ -398,18 +370,7 @@
              '("\\([a-zA-Z0-9\\.]+\\)(\\([0-9]+\\)\\(,\\([0-9]+\\)\\)?) \\(Warning:\\)?"
                1 2 (4) (5)))
 
-;; (add-to-list 'compilation-error-regexp-alist-alist
-;;              '(rakefile-indent-error
-;;                "^\\(.*\\):\\([0-9]+\\)"
-;;                1 2))
-
-(add-to-list 'compilation-error-regexp-alist 'rakefile-indent-error)
-
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(custom-safe-themes
     '("e27c9668d7eddf75373fa6b07475ae2d6892185f07ebed037eedf783318761d7" "d19f00fe59f122656f096abbc97f5ba70d489ff731d9fa9437bac2622aaa8b89" "f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" default))
  '(package-selected-packages
